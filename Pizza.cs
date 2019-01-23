@@ -4,70 +4,62 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections;
+using FactoryMethod.Ingredients;
 
 namespace FactoryMethod
 {
     public abstract class Pizza
     {
         protected string Name;
-        protected string Dough;
-        protected string Sauce;
-        protected List<String> toppings = new List<string>();
+        protected Dough Dough;
+        protected Sauce Sauce;
+        protected Veggies[] veggies;
+        protected Cheese Cheese;
+        protected Clams Clam;
 
-        public virtual void Prepare()
-        {
-            Console.WriteLine("Preparing " + Name);
-            Console.WriteLine("Tossing dough...");
-            Console.WriteLine("Adding sauce...");
-            Console.WriteLine("Adding toppings: ");
-            foreach(String topping in toppings)
-            {
-                Console.WriteLine(" " + topping);
-            }
-        }
+        public abstract void Prepare();
         public virtual void Bake() => Console.WriteLine("Bake for 25 minutes at 350");
         public virtual void Cut() => Console.WriteLine("Cutting the pizza into diagonal slince");
         public virtual void Box() => Console.WriteLine("Place pizza in official PizzaStore box");
 
         public string GetName() => Name;
+        public string SetName(string name) => this.Name = name;
     }
 
-    public class NYStyleCheesePizza : Pizza
+    public class CheesePizza : Pizza
     {
-        public NYStyleCheesePizza()
+        PizzaIngredientFactory ingredientFactory;
+
+        public CheesePizza(PizzaIngredientFactory ingredientFactory)
         {
-            Name = "NY Style Sauce and Cheese Pizza";
-            Dough = "Thin Crust Dough";
-            Sauce = "Marinara Sauce";
-
-            toppings.Add("Grated Reggiano Cheese");
-        }
-    }
-
-    public class ChicagoStyleCheesePizza : Pizza
-    {
-        public ChicagoStyleCheesePizza()
-        {
-            Name = "Chicago Style Deep Dish Cheese Pizza";
-            Dough = "Extra Thick Crust Dough";
-            Sauce = "Plum Tomato Sauce";
-
-            toppings.Add("Shredded Mozzarella Cheese");
+            this.ingredientFactory = ingredientFactory;
         }
 
-        public override void Cut()
+        public override void Prepare()
         {
-            Console.WriteLine("Cutting the pizza into square slices");
+            Console.WriteLine("Preparing " + Name);
+            Dough = ingredientFactory.CreateDough();
+            Sauce = ingredientFactory.CreateSauce();
+            Cheese = ingredientFactory.CreateCheese();
         }
     }
 
     public class ClamPizza : Pizza
     {
+        PizzaIngredientFactory ingredientFactory;
 
-    }
+        public ClamPizza(PizzaIngredientFactory ingredientFactory)
+        {
+            this.ingredientFactory = ingredientFactory;
+        }
 
-    public class PepperoniPizza : Pizza
-    {
-
+        public override void Prepare()
+        {
+            Console.WriteLine("Preparing " + Name);
+            Dough = ingredientFactory.CreateDough();
+            Sauce = ingredientFactory.CreateSauce();
+            Cheese = ingredientFactory.CreateCheese();
+            Clam = ingredientFactory.CreateClam();
+        }
     }
 }

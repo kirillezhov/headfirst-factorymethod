@@ -28,12 +28,5 @@
       <FileName>Pizza.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FactoryMethod.SimplePizzaFactory">
-    <Position X="3.25" Y="0.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Factory.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

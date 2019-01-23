@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FactoryMethod.Ingredients;
 
 namespace FactoryMethod
 {
@@ -26,11 +27,21 @@ namespace FactoryMethod
     {
         public override Pizza CreatePizza(string item)
         {
+            Pizza pizza = null;
+            var ingredientFactory = new NYPizzaIngredientFactory();
+
             if (item.Equals("cheese"))
             {
-                return new NYStyleCheesePizza();
+                pizza = new CheesePizza(ingredientFactory);
+                pizza.SetName("New York Style Cheese Pizza");
             }
-            else return null;
+            else if (item.Equals("clam"))
+            {
+                pizza = new ClamPizza(ingredientFactory);
+                pizza.SetName("New York Style Clam Pizza");
+            }
+
+            return pizza;
         }
     }
 
@@ -38,11 +49,21 @@ namespace FactoryMethod
     {
         public override Pizza CreatePizza(string item)
         {
+            Pizza pizza = null;
+            var ingredientFactory = new ChicagoPizzaIngredientFactory();
+
             if (item.Equals("cheese"))
             {
-                return new ChicagoStyleCheesePizza();
+                pizza = new CheesePizza(ingredientFactory);
+                pizza.SetName("Chicago Style Cheese Pizza");
             }
-            else return null;
+            else if (item.Equals("clam"))
+            {
+                pizza = new ClamPizza(ingredientFactory);
+                pizza.SetName("Chicago Style Clam Pizza");
+            }
+
+            return pizza;
         }
     }
 }
